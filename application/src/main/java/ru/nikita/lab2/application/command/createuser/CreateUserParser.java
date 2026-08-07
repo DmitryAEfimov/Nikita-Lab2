@@ -4,10 +4,10 @@ import ru.nikita.lab2.api.dto.UserDto;
 import ru.nikita.lab2.application.command.Command;
 import ru.nikita.lab2.application.request.RequestContext;
 
-public class CreateUserWorker implements Command {
+public class CreateUserParser implements Command {
     private final RequestContext<UserDto> ctx;
 
-    public CreateUserWorker(RequestContext<UserDto> ctx) {
+    public CreateUserParser(RequestContext<UserDto> ctx) {
         this.ctx = ctx;
     }
 

@@ -3,9 +3,9 @@ package ru.nikita.lab2.application;
 import ru.nikita.lab2.api.enumeration.Gender;
 import ru.nikita.lab2.api.enumeration.HairColor;
 import ru.nikita.lab2.api.enumeration.OpType;
-import ru.nikita.lab2.application.command.Command;
-import ru.nikita.lab2.application.command.CommandDispatcher;
 import ru.nikita.lab2.application.exception.ExceptionHandlerResolver;
+import ru.nikita.lab2.application.request.RequestDispatcher;
+import ru.nikita.lab2.application.request.RequestProcessor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,29 +26,27 @@ class Application {
 
     public void start() throws IOException {
         readme();
-        stop = false;
         while (!stop) {
             var command = reader.readLine();
 
-            // Проверяем, какую команду ввели
-            if (STOP_WORD.equals(command)) {
+            if (STOP_WORD.equalsIgnoreCase(command)) {
                 terminate();
             } else {
-                processQueue(new CommandDispatcher(command));
+                processRequest(RequestDispatcher.dispatch(command));
             }
         }
     }
 
-    public synchronized void terminate() {
+    public void terminate() {
         stop = true;
     }
 
-    private void processQueue(Command command) {
-        if (command != null) {
+    private void processRequest(RequestProcessor<?> processor) {
+        if (processor != null) {
             try {
-                command.execute();
+                processor.execute();
             } catch (Exception e) {
-                var exceptionHandler = exResolver.resolve(command, e);
+                var exceptionHandler = exResolver.resolve(processor.getContext(), e);
                 exceptionHandler.execute();
             }
         }
@@ -68,7 +66,7 @@ class Application {
                 - Account (attrs - id:UUID!, user:User!, balance:decimal, operations:[Operation]):
                   -- createAccount {userId:UUID!}
                   -- deleteAccount {id:UUID!}
-                  -- getBalance {id!}
+                  -- readAccountInfo {id!}
                   -- showHistory {id!, fromDate:date, toDate:date} dates in RFC3339 format
                   -- deposit {id!, amount!}
                   -- withdraw {id!, amount!}

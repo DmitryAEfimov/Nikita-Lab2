@@ -1,32 +1,24 @@
 package ru.nikita.lab2.application.request;
 
-import ru.nikita.lab2.application.command.RequestValidator;
-import ru.nikita.lab2.application.command.RequestWorker;
+public class RequestContext<T> {
+    private final String commandName;
+    private final String rawPayload;
+    private T payload;
 
-public class RequestContext {
-    private final String rawString;
-    private RequestValidator validator;
-    private RequestWorker worker;
-    private PayloadParser parser;
-    private Object payload;
-
-    public RequestContext(String rawString) {
-        this.rawString = rawString;
+    public RequestContext(String commandName, String rawPayload) {
+        this.commandName = commandName;
+        this.rawPayload = rawPayload;
     }
 
-    public String getRawString() {
-        return rawString;
+    public String getCommandName() {
+        return commandName;
     }
 
-    public RequestValidator getValidator() {
-        return validator;
+    public String getRawPayload() {
+        return rawPayload;
     }
 
-    public RequestWorker getWorker() {
-        return worker;
-    }
-
-    public Object getPayload() {
+    public T getPayload() {
         return payload;
     }
 }
