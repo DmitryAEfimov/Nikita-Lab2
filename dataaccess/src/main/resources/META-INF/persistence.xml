@@ -14,8 +14,8 @@
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://${DB_HOST}/${DB_NAME}"/>
-            <property name="jakarta.persistence.jdbc.user" value="${DB_USER}"/>
-            <property name="jakarta.persistence.jdbc.password" value="${DB_PASSWORD}"/>
+            <property name="jakarta.persistence.jdbc.user" value="${APP_USER}"/>
+            <property name="jakarta.persistence.jdbc.password" value="${APP_PASSWORD}"/>
             <property name="jakarta.persistence.lock.timeout" value="100"/>
             <property name="jakarta.persistence.query.timeout" value="100"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>

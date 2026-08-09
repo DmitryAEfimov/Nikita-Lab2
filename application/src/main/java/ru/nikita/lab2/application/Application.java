@@ -21,7 +21,6 @@ class Application {
     public Application() {
         this.exResolver = new ExceptionHandlerResolver();
         this.reader = new BufferedReader(new InputStreamReader(System.in));
-        this.stop = true;
     }
 
     public void start() throws IOException {
@@ -55,10 +54,12 @@ class Application {
     private void readme() {
         System.out.println("""
                 Для выхода введите:\s""" + STOP_WORD + """
-                Поддерживаемые команды (case-sensitive) и формат данных: <cmd_name> <json-like with escaped quotes>
+                \nПоддерживаемые команды и формат данных: <cmd_name> <json-like payload>
+                Названия команд регистрозависимы. Кавычки в payload должны быть экранированы
+                Пример: deleteUser {\\"id\\": \\"019fe39d-e135-738c-a1af-10d8e4dffc7d\\"}
                 - User (attrs - id:UUID!, login:String!, name:String!, age:integer!, gender:Gender, hairColor:HairColor, accounts:[Account], friends:[User]):
                   -- createUser {login!, name!, age!, gender, hairColor}
-                  -- updateUser {id!, name, age, gender, hairColor}. Include only modified attrs. <attr>: null - purge current value
+                  -- updateUser {id!, name, age, gender, hairColor}. В запрос передаются только изменяемые атрибуты. <attr>: null - очистка существующего значения
                   -- deleteUser {id!}
                   -- readUserInfo {id!}
                   -- addFriend {id!, friendId!}
@@ -73,8 +74,8 @@ class Application {
                   -- transfer {id!, amount!, destination!}
                 - Operation (attrs - id:UUID!, account:Account!, opType:OpType!, destination:Account, opdate:date, amount:decimal!, commission:decimal) date in RFC3339 format
                 - Gender:\s""" + Arrays.toString(Gender.values()) + """
-                - HairColor:\s""" + Arrays.toString(HairColor.values()) + """
-                - OpType:\s""" + Arrays.toString(OpType.values()) + """
-                """);
+                \n- HairColor:\s""" + Arrays.toString(HairColor.values()) + """
+                \n- OpType:\s""" + Arrays.toString(OpType.values()) + """
+                \n""");
     }
 }
