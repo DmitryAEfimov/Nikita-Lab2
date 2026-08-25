@@ -12,6 +12,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.Audited;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.type.descriptor.jdbc.NumericJdbcType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,19 +30,24 @@ public class AccountEntity {
     @Id
     private UUID id;
     @Column(name = "balance", nullable = false)
+    @JdbcType(value = NumericJdbcType.class)
     private double balance;
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private UserEntity user;
-    @OneToMany(mappedBy = "account", cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "account_id", nullable = false, updatable = false)
+    @OneToMany(
+            mappedBy = "account",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
     private List<OperationEntity> operations;
+
 
     protected AccountEntity() {
         // for jpa only
     }
 
     public AccountEntity(double balance, UserEntity user) {
+        this.id = UUID.randomUUID();
         this.balance = balance;
         this.user = user;
         this.operations = new ArrayList<>();
@@ -60,6 +67,10 @@ public class AccountEntity {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public void addOperation(OperationEntity operation){
+        operations.add(operation);
     }
 
     /**

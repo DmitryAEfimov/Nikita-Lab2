@@ -1,19 +1,8 @@
 package ru.nikita.lab2.dao.entity;
 
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.Audited;
+
 import ru.nikita.lab2.api.enumeration.Gender;
 import ru.nikita.lab2.api.enumeration.HairColor;
 
@@ -28,6 +17,7 @@ import java.util.UUID;
 @Audited.Table(name = "users_aud")
 public class UserEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(name = "login", nullable = false, updatable = false, unique = true)
     private String login;
@@ -35,14 +25,16 @@ public class UserEntity {
     private String name;
     @Column(name = "age", nullable = false)
     private int age;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "hair_color")
     private HairColor hairColor;
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "owner_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "friend_id", referencedColumnName = "id"))
+    private UserEntity owner;
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @Audited.CollectionTable(name = "user_friends_aud")
     private Set<UserEntity> friends;
 

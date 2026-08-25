@@ -1,14 +1,11 @@
-CREATE TYPE lab2.GENDER AS ENUM ('male', 'female');
-CREATE TYPE lab2.HAIR AS ENUM ('black', 'blonde', 'red', 'colored');
-
 create table lab2.users
 (
     id         UUID PRIMARY KEY DEFAULT uuidv7(),
     login      varchar(20) NOT NULL UNIQUE,
     name       varchar(50) NOT NULL,
     age        integer     NOT NULL,
-    gender     GENDER,
-    hair_color HAIR
+    gender     varchar check ( gender in ('MALE', 'FEMALE') ),
+    hair_color varchar check ( hair_color in ('BLACK', 'BLONDE', 'RED', 'COLORED') )
 );
 
 create table lab2.users_aud
@@ -17,8 +14,8 @@ create table lab2.users_aud
     login      varchar(20)              NOT NULL,
     name       varchar(50)              NOT NULL,
     age        integer                  NOT NULL,
-    gender     GENDER,
-    hair_color HAIR,
+    gender     varchar,
+    hair_color varchar,
     rev        timestamp with time zone NOT NULL default now(),
     revtype    integer
 );

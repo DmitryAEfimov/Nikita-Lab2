@@ -9,7 +9,7 @@ create table lab2.user_friends
 create table lab2.user_friends_aud
 (
     owner_id  UUID                     NOT NULL,
-    friend_id UUID                     NOT NULL,
+    friend_id UUID                     ,
     rev       timestamp with time zone NOT NULL default now(),
     revtype   integer
 )

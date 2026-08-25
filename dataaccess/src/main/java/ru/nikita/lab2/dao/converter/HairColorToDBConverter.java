@@ -4,7 +4,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import ru.nikita.lab2.api.enumeration.HairColor;
 
-@Converter
+@Converter(autoApply = true)
 public class HairColorToDBConverter implements AttributeConverter<HairColor, String> {
     @Override
     public String convertToDatabaseColumn(HairColor hairColor) {

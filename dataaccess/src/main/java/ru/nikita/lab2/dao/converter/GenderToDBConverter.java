@@ -4,7 +4,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import ru.nikita.lab2.api.enumeration.Gender;
 
-@Converter
+@Converter(autoApply = true)
 public class GenderToDBConverter implements AttributeConverter<Gender, String> {
     @Override
     public String convertToDatabaseColumn(Gender gender) {

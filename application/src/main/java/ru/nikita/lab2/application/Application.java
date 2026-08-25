@@ -6,6 +6,18 @@ import ru.nikita.lab2.api.enumeration.OpType;
 import ru.nikita.lab2.application.exception.ExceptionHandlerResolver;
 import ru.nikita.lab2.application.request.RequestDispatcher;
 import ru.nikita.lab2.application.request.RequestProcessor;
+import ru.nikita.lab2.dao.repository.AccountRepository;
+import ru.nikita.lab2.dao.repository.UserRepository;
+import ru.nikita.lab2.dao.repository.impl.AccountRepositoryImpl;
+import ru.nikita.lab2.dao.repository.impl.UserRepositoryImpl;
+import ru.nikita.lab2.service.AccountCRUDService;
+import ru.nikita.lab2.service.FriendService;
+import ru.nikita.lab2.service.OperationService;
+import ru.nikita.lab2.service.UserCRUDService;
+import ru.nikita.lab2.service.impl.AccountServiceImpl;
+import ru.nikita.lab2.service.impl.FriendServiceImpl;
+import ru.nikita.lab2.service.impl.OperationServiceImpl;
+import ru.nikita.lab2.service.impl.UserServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,10 +29,31 @@ class Application {
     private final ExceptionHandlerResolver exResolver;
     private final BufferedReader reader;
     private boolean stop;
+    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
+    private final RequestDispatcher requestDispatcher;
+
+    private final UserCRUDService userService;
+    private final FriendService friendService;
+    private final AccountCRUDService accountService;
+    private final OperationService operationService;
 
     public Application() {
         this.exResolver = new ExceptionHandlerResolver();
         this.reader = new BufferedReader(new InputStreamReader(System.in));
+
+        this.userRepository = new UserRepositoryImpl();
+        this.accountRepository = new AccountRepositoryImpl();
+
+
+        this.userService = new UserServiceImpl(userRepository);
+        this.requestDispatcher = new RequestDispatcher(userService);
+        this.friendService = new FriendServiceImpl(userRepository);
+        this.accountService = new AccountServiceImpl(
+                accountRepository,
+                userRepository
+        );
+        this.operationService = new OperationServiceImpl(accountRepository);
     }
 
     public void start() throws IOException {
@@ -31,7 +64,7 @@ class Application {
             if (STOP_WORD.equalsIgnoreCase(command)) {
                 terminate();
             } else {
-                processRequest(RequestDispatcher.dispatch(command));
+                processRequest(requestDispatcher.dispatch(command));
             }
         }
     }
@@ -46,7 +79,12 @@ class Application {
                 processor.execute();
             } catch (Exception e) {
                 var exceptionHandler = exResolver.resolve(processor.getContext(), e);
-                exceptionHandler.execute();
+
+                if (exceptionHandler != null) {
+                    exceptionHandler.execute();
+                } else {
+                    e.printStackTrace();
+                }
             }
         }
     }
