@@ -5,6 +5,8 @@ plugins {
 dependencies {
     implementation(project(":common"))
     implementation(project(":service"))
+    implementation("tools.jackson.core:jackson-databind:3.2.2") //json parser
+    implementation("am.ik.yavi:yavi:0.16.0") //validation
 }
 
 val fatJar = tasks.register("fatJar", Jar::class) {
