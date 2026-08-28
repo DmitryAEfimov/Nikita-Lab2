@@ -10,50 +10,49 @@
 ### Шаг 1. Сборкa образа БД Postgres
 Выполнять из корневой директории проекта
 ```
-> docker build -t pg-lab2:latest ./db
+docker build -t pg-lab2:latest ./db
 ```
 
 ### Шаг 2. Запуск БД и миграции скриптов
 Выполнять из корневой директории проекта
-` > docker-compose up [--detach] `
+`docker-compose up [--detach]`
 Флаг `--detach` означает, что контейнеры запустятся в фоне
 
 ### Шаг 3. Базовые операции с контейнерами
 ```
-Проверка состояния
-> docker-compose ps -a
-State=Up - контейнер поднят и готов прнимать запросы
+Проверка состояния (State=Up - контейнер поднят и готов прнимать запросы)
+docker-compose ps -a
 
 Просмотр логов
-> docker-compose logs [container_names]
+docker-compose logs [container_names]
 
 Справка по работе с docker
-> docker --help
+docker --help
 
 Справка по работе с docker-compose
-> docker-compose --help
+docker-compose --help
 ```
 
 ### Шаг 4. Сборка проекта
 Выполнять из корневой директории проекта
 ```
- Для Windows
- > ./gradlew.bat build
+Для Windows
+./gradlew.bat build
  
- Для Linux/MacOS
- > ./gradlew build
+Для Linux/MacOS
+./gradlew build
 ```
 
 ### Шаг 5. Запуск приложеня
 Выполнять из корневой директории проекта
 ```
- > java -jar ./application/build/libs/lab2-app.jar
+java -jar ./application/build/libs/lab2-app.jar
 ```
 ## Завершение работы приложения
- `> exit`
+`exit`
 
 ## Завершение работы контейнеров
-`> docker-compose down`
+`docker-compose down`
  
 ## Оперируемые сущности
 ### User

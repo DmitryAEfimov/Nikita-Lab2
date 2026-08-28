@@ -8,16 +8,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.Audited;
+
+import org.hibernate.annotations.Generated;
 import ru.nikita.lab2.api.enumeration.Gender;
 import ru.nikita.lab2.api.enumeration.HairColor;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -28,6 +34,7 @@ import java.util.UUID;
 @Audited.Table(name = "users_aud")
 public class UserEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(name = "login", nullable = false, updatable = false, unique = true)
     private String login;
@@ -35,14 +42,16 @@ public class UserEntity {
     private String name;
     @Column(name = "age", nullable = false)
     private int age;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "hair_color")
     private HairColor hairColor;
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "owner_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "friend_id", referencedColumnName = "id"))
+    private UserEntity owner;
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @Audited.CollectionTable(name = "user_friends_aud")
     private Set<UserEntity> friends;
 
@@ -58,6 +67,10 @@ public class UserEntity {
         this.gender = gender;
         this.hairColor = hairColor;
         this.friends = Set.of();
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     public UUID getId() {
@@ -121,10 +134,6 @@ public class UserEntity {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
-    }
-
-    public static Builder builder() {
-        return new Builder();
     }
 
     public static class Builder {

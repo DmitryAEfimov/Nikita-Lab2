@@ -4,12 +4,14 @@ import ru.nikita.lab2.api.dto.UserDto;
 import ru.nikita.lab2.dao.entity.UserEntity;
 import ru.nikita.lab2.dao.repository.UserRepository;
 import ru.nikita.lab2.service.UserCRUDService;
+import ru.nikita.lab2.service.util.ServiceFactory;
 
 public class UserServiceImpl implements UserCRUDService {
     private final UserRepository userRepo;
 
-    public UserServiceImpl(UserRepository userRepo) {
-        this.userRepo = userRepo;
+    public UserServiceImpl() {
+
+        this.userRepo = ServiceFactory.of(UserRepository.class);
     }
 
     @Override
@@ -40,14 +42,7 @@ public class UserServiceImpl implements UserCRUDService {
     }
 
     private UserEntity toEntity(UserDto user) {
-        return UserEntity.builder()
-                .id(user.userId())
-                .login(user.login())
-                .name(user.name())
-                .age(user.age())
-                .gender(user.gender())
-                .hairColor(user.hairColor())
-                .build();
+        return UserEntity.builder().id(user.userId()).login(user.login()).name(user.name()).age(user.age()).gender(user.gender()).hairColor(user.hairColor()).build();
     }
 
     private UserDto fromEntity(UserEntity entity) {

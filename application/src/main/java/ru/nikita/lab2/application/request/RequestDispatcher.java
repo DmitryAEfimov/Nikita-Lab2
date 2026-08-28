@@ -1,13 +1,15 @@
 package ru.nikita.lab2.application.request;
 
 import ru.nikita.lab2.application.command.createuser.CreateUserProcessor;
+import ru.nikita.lab2.application.exception.InvalidCommandFormatException;
 import ru.nikita.lab2.application.exception.UnknownRequestException;
 
 public class RequestDispatcher {
     public static RequestProcessor<?> dispatch(String input) {
-        var parts = input.split("\\s");
+        var parts = input.trim().split("\\s+", 2);
+
         if (parts.length != 2) {
-            //            throw new InvalidCommandFormatException(input);
+            throw new InvalidCommandFormatException(input);
         }
 
         var commandName = parts[0];

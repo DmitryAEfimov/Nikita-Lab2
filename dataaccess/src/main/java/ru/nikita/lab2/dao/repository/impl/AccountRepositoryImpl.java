@@ -24,9 +24,6 @@ public class AccountRepositoryImpl extends BaseRepository implements AccountRepo
     @Override
     public Set<AccountEntity> findAccountsByUser(UserEntity user) {
         var em = getEntityManager();
-        return em.createNamedQuery("findAccountsByUser", AccountEntity.class)
-                .setParameter("user", user)
-                .getResultStream()
-                .collect(Collectors.toSet());
+        return em.createNamedQuery("findAccountsByUser", AccountEntity.class).setParameter("user", user).getResultStream().collect(Collectors.toSet());
     }
 }

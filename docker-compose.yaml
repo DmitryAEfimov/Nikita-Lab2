@@ -13,6 +13,7 @@ services:
   flyway:
     image: redgate/flyway:13.2.0-alpine
     container_name: flyway
+    platform: linux/amd64
     environment:
       DB_HOST: postgres
       DB_NAME: lab2db

@@ -5,6 +5,7 @@ import ru.nikita.lab2.dao.entity.UserEntity;
 import ru.nikita.lab2.dao.repository.UserRepository;
 import ru.nikita.lab2.service.FriendService;
 import ru.nikita.lab2.service.exception.NoUserFoundException;
+import ru.nikita.lab2.service.util.ServiceFactory;
 
 import java.util.HashSet;
 import java.util.UUID;
@@ -12,8 +13,8 @@ import java.util.UUID;
 public class FriendServiceImpl implements FriendService {
     private final UserRepository userRepo;
 
-    public FriendServiceImpl(UserRepository userRepo) {
-        this.userRepo = userRepo;
+    public FriendServiceImpl() {
+        this.userRepo = ServiceFactory.of(UserRepository.class);
     }
 
     @Override

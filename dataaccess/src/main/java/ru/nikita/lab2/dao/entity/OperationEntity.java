@@ -6,11 +6,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.Audited;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.type.descriptor.jdbc.NumericJdbcType;
 import ru.nikita.lab2.api.enumeration.OpType;
 
 import java.time.Instant;
@@ -24,6 +28,7 @@ import java.util.UUID;
 @Audited.Table(name = "operations_aud")
 public class OperationEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @ManyToOne(optional = false)
     @JoinColumn(name = "account_id", nullable = false, updatable = false)
@@ -32,22 +37,33 @@ public class OperationEntity {
     @Column(name = "operation_type")
     private OpType opType;
     @Column(name = "amount", nullable = false)
+    @JdbcType(value = NumericJdbcType.class)
     private double amount;
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @Column(name = "operation_at", updatable = false, nullable = false)
     private Instant oparationInstant;
+    @Column(name = "commission", nullable = false)
+    @JdbcType(value = NumericJdbcType.class)
+    private double commission;
 
     protected OperationEntity() {
         // for jpa only
     }
 
-    public OperationEntity(AccountEntity account, OpType opType, double amount) {
+    public OperationEntity(AccountEntity account, OpType opType, double amount, double commission) {
+        this.id = UUID.randomUUID();
         this.account = account;
         this.opType = opType;
         this.amount = amount;
+        this.commission = commission;
+        this.oparationInstant = Instant.now();
     }
 
     public UUID getId() {
         return id;
+    }
+
+    public double getCommission() {
+        return commission;
     }
 
     public AccountEntity getAccount() {

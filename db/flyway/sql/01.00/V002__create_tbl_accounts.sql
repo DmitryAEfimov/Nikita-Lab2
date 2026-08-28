@@ -9,7 +9,7 @@ create table lab2.accounts
 create table lab2.accounts_aud
 (
     id      UUID                     NOT NULL,
-    login   varchar(20)              NOT NULL,
+    user_id   UUID              NOT NULL,
     balance NUMERIC(10, 2)           NOT NULL,
     rev     timestamp with time zone NOT NULL default now(),
     revtype integer
