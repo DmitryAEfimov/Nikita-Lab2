@@ -6,8 +6,6 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":service"))
     implementation("tools.jackson.core:jackson-databind:3.2.2") //json parser
-    runtimeOnly("org.hibernate.validator:hibernate-validator:9.1.3.Final")
-    runtimeOnly("jakarta.el:jakarta.el-api:6.1.0-M2")
 }
 
 val fatJar = tasks.register("fatJar", Jar::class) {

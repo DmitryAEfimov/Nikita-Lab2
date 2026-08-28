@@ -17,21 +17,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.Audited;
-
-import org.hibernate.annotations.Generated;
 import ru.nikita.lab2.api.enumeration.Gender;
 import ru.nikita.lab2.api.enumeration.HairColor;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(schema = "lab2", name = "users")
 @Access(AccessType.FIELD)
 @Audited
-@Audited.Table(name = "users_aud")
+@Audited.Table(schema = "lab2", name = "users_aud")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -52,7 +49,7 @@ public class UserEntity {
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "owner_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "friend_id", referencedColumnName = "id"))
     private UserEntity owner;
     @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @Audited.CollectionTable(name = "user_friends_aud")
+    @Audited.CollectionTable(schema = "lab2", name = "user_friends_aud")
     private Set<UserEntity> friends;
 
     protected UserEntity() {

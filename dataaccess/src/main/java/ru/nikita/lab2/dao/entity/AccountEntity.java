@@ -23,10 +23,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "accounts")
+@Table(schema = "lab2", name = "accounts")
 @Access(AccessType.FIELD)
 @Audited
-@Audited.Table(name = "accounts_aud")
+@Audited.Table(schema = "lab2", name = "accounts_aud")
 @NamedQuery(name = "findAccountsByUser", query = "select a from AccountEntity a where a.user = :user")
 public class AccountEntity {
     @Id

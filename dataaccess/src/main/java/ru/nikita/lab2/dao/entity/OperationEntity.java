@@ -22,10 +22,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "operations")
+@Table(schema = "lab2", name = "operations")
 @Access(AccessType.FIELD)
 @Audited
-@Audited.Table(name = "operations_aud")
+@Audited.Table(schema = "lab2", name = "operations_aud")
 public class OperationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
