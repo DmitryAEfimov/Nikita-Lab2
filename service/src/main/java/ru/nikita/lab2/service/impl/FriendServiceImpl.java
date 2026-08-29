@@ -4,7 +4,7 @@ import ru.nikita.lab2.api.dto.FriendDto;
 import ru.nikita.lab2.dao.entity.UserEntity;
 import ru.nikita.lab2.dao.repository.UserRepository;
 import ru.nikita.lab2.service.FriendService;
-import ru.nikita.lab2.service.exception.NoUserFoundException;
+import ru.nikita.lab2.dao.repository.exception.NoUserFoundException;
 import ru.nikita.lab2.service.util.ServiceFactory;
 
 import java.util.HashSet;

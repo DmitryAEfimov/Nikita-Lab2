@@ -46,7 +46,7 @@ public class UserEntity {
     @Column(name = "hair_color")
     private HairColor hairColor;
     @ManyToOne
-    @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "owner_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "friend_id", referencedColumnName = "id"))
+    @JoinTable(schema = "lab2", name = "user_friends", joinColumns = @JoinColumn(name = "owner_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "friend_id", referencedColumnName = "id"))
     private UserEntity owner;
     @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @Audited.CollectionTable(schema = "lab2", name = "user_friends_aud")

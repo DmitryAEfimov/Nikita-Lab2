@@ -8,7 +8,7 @@ import java.util.UUID;
 public interface UserRepository {
     UserEntity upsertUser(UserEntity user);
 
-    void deleteUser(UserEntity user);
+    void deleteUser(UUID userId);
 
     Optional<UserEntity> findUserById(UUID userId);
 }

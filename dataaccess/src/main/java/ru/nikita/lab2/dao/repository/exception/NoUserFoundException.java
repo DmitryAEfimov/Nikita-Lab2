@@ -1,4 +1,4 @@
-package ru.nikita.lab2.service.exception;
+package ru.nikita.lab2.dao.repository.exception;
 
 import java.util.UUID;
 

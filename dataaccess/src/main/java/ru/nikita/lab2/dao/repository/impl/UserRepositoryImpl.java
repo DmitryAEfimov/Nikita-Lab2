@@ -2,6 +2,7 @@ package ru.nikita.lab2.dao.repository.impl;
 
 import ru.nikita.lab2.dao.entity.UserEntity;
 import ru.nikita.lab2.dao.repository.UserRepository;
+import ru.nikita.lab2.dao.repository.exception.NoUserFoundException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -13,9 +14,12 @@ public class UserRepositoryImpl extends BaseRepository implements UserRepository
     }
 
     @Override
-    public void deleteUser(UserEntity user) {
+    public void deleteUser(UUID userId) {
         doWithinTransaction(em -> {
-            em.remove(user);
+            Optional.ofNullable(em.find(UserEntity.class, userId)).ifPresentOrElse(em::remove, () -> {
+                        throw new NoUserFoundException(userId);
+                    }
+            );
             return null;
         });
     }

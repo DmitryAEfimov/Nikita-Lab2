@@ -1,6 +1,7 @@
 package ru.nikita.lab2.application.request;
 
 import ru.nikita.lab2.application.command.createuser.CreateUserProcessor;
+import ru.nikita.lab2.application.command.deleteUser.DeleteUserProcessor;
 import ru.nikita.lab2.application.exception.InvalidCommandFormatException;
 import ru.nikita.lab2.application.exception.UnknownRequestException;
 
@@ -20,10 +21,7 @@ public class RequestDispatcher {
             //                var ctx = new RequestContext<UserDto>(commandName, rawPayload);
             //                new CreateUserProcessor(ctx);
             //            }
-            //            case "deleteUser" -> {
-            //                var ctx = new RequestContext<UserDto>(commandName, rawPayload);
-            //                new CreateUserProcessor(ctx);
-            //            }
+            case "deleteUser" -> new DeleteUserProcessor(new RequestContext<>(commandName, rawPayload));
             //            case "readUserInfo" -> {
             //                var ctx = new RequestContext<UserDto>(commandName, rawPayload);
             //                new CreateUserProcessor(ctx);
