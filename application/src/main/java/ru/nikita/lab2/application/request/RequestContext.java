@@ -1,9 +1,10 @@
 package ru.nikita.lab2.application.request;
 
-public class RequestContext<T> {
+public class RequestContext<Req, Res> {
     private final String commandName;
     private final String rawPayload;
-    private T payload;
+    private Req payload;
+    private Res result;
 
     public RequestContext(String commandName, String rawPayload) {
         this.commandName = commandName;
@@ -18,11 +19,19 @@ public class RequestContext<T> {
         return rawPayload;
     }
 
-    public T getPayload() {
+    public Req getPayload() {
         return payload;
     }
 
-    public void setPayload(T payload) {
+    public void setPayload(Req payload) {
         this.payload = payload;
+    }
+
+    public Res getResult() {
+        return result;
+    }
+
+    public void setResult(Res result) {
+        this.result = result;
     }
 }

@@ -1,7 +1,8 @@
 package ru.nikita.lab2.application.request;
 
-import ru.nikita.lab2.application.command.createuser.CreateUserProcessor;
-import ru.nikita.lab2.application.command.deleteUser.DeleteUserProcessor;
+import ru.nikita.lab2.application.command.user.createuser.CreateUserProcessor;
+import ru.nikita.lab2.application.command.user.deleteuser.DeleteUserProcessor;
+import ru.nikita.lab2.application.command.user.updateuser.UpdateUserProcessor;
 import ru.nikita.lab2.application.exception.InvalidCommandFormatException;
 import ru.nikita.lab2.application.exception.UnknownRequestException;
 
@@ -17,20 +18,17 @@ public class RequestDispatcher {
         var rawPayload = parts[1];
         return switch (commandName) {
             case "createUser" -> new CreateUserProcessor(new RequestContext<>(commandName, rawPayload));
-            //            case "updateUser" -> {
-            //                var ctx = new RequestContext<UserDto>(commandName, rawPayload);
-            //                new CreateUserProcessor(ctx);
-            //            }
+            case "updateUser" -> new UpdateUserProcessor(new RequestContext<>(commandName, rawPayload));
             case "deleteUser" -> new DeleteUserProcessor(new RequestContext<>(commandName, rawPayload));
             //            case "readUserInfo" -> {
             //                var ctx = new RequestContext<UserDto>(commandName, rawPayload);
             //                new CreateUserProcessor(ctx);
             //            }
-            //            case "addFriend" -> {
+            //            case "addFriends" -> {
             //                var ctx = new RequestContext<UserDto>(commandName, rawPayload);
             //                new CreateUserProcessor(ctx);
             //            }
-            //            case "deleteFriend" -> {
+            //            case "deleteFriends" -> {
             //                var ctx = new RequestContext<UserDto>(commandName, rawPayload);
             //                new CreateUserProcessor(ctx);
             //            }

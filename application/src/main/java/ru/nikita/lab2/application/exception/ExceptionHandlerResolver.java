@@ -5,7 +5,7 @@ import ru.nikita.lab2.application.command.log.LogErrorStackTraceCommand;
 import ru.nikita.lab2.application.request.RequestContext;
 
 public class ExceptionHandlerResolver {
-    public Command resolve(RequestContext<?> ctx, Exception ex) {
+    public Command resolve(RequestContext<?, ?> ctx, Exception ex) {
         return new LogErrorStackTraceCommand(ctx, ex);
     }
 }

@@ -8,10 +8,10 @@ import ru.nikita.lab2.application.request.RequestContext;
 public class LogErrorStackTraceCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(LogErrorStackTraceCommand.class);
 
-    private final RequestContext<?> ctx;
+    private final RequestContext<?, ?> ctx;
     private final Exception ex;
 
-    public LogErrorStackTraceCommand(RequestContext<?> ctx, Exception ex) {
+    public LogErrorStackTraceCommand(RequestContext<?, ?> ctx, Exception ex) {
         this.ctx = ctx;
         this.ex = ex;
     }

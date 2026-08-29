@@ -1,4 +1,4 @@
-package ru.nikita.lab2.application.command.deleteUser;
+package ru.nikita.lab2.application.command.user.deleteuser;
 
 import ru.nikita.lab2.api.dto.IdDto;
 import ru.nikita.lab2.application.command.Command;
@@ -6,9 +6,9 @@ import ru.nikita.lab2.application.request.RequestContext;
 import ru.nikita.lab2.application.utils.JsonUtil;
 
 public class DeleteUserParser implements Command {
-    private final RequestContext<IdDto> ctx;
+    private final RequestContext<IdDto, Void> ctx;
 
-    public DeleteUserParser(RequestContext<IdDto> ctx) {
+    public DeleteUserParser(RequestContext<IdDto, Void> ctx) {
         this.ctx = ctx;
     }
 

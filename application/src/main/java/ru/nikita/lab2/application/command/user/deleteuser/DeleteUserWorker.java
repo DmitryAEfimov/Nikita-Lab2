@@ -1,4 +1,4 @@
-package ru.nikita.lab2.application.command.deleteUser;
+package ru.nikita.lab2.application.command.user.deleteuser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +11,10 @@ import ru.nikita.lab2.service.util.ServiceFactory;
 public class DeleteUserWorker implements Command {
     private static final Logger logger = LoggerFactory.getLogger(DeleteUserWorker.class);
 
-    private final RequestContext<IdDto> ctx;
+    private final RequestContext<IdDto, Void> ctx;
     private final UserCRUDService userService;
 
-    public DeleteUserWorker(RequestContext<IdDto> ctx) {
+    public DeleteUserWorker(RequestContext<IdDto, Void> ctx) {
         this.ctx = ctx;
         this.userService = ServiceFactory.of(UserCRUDService.class);
     }

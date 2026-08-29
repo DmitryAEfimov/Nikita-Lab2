@@ -90,17 +90,17 @@ java -jar ./application/build/libs/lab2-app.jar
 > [!WARNING]
 > названия команд case-sensitive
 > 
-> payload команды json-like вида с экранированными кавычками
+> payload команды json-like вида
 >
 > Пример:
-`> createUser {\"login\": \"sonik\", \"name\": \"Vasya\", \"age\": 32, \"gender\": \"MALE\"}`
+`> createUser {"login": "sonik", "name": "Vasya", "age": 32, "gender": "MALE"}`
 - Операции с пользователями
   - `createUser: {login!, name!, age!, gender, hairColor}`
   - `updateUser: {id!, name, age, gender, hairColor}` ❗ В запросе должны присутствовать только изменяемые атрибуты. `\"<attrName>\": null` - удаляет текущее значение атрибута
   - `deleteUser: {id!}`
   - `readUserInfo: {id!}`
-  - `addFriend: {id!, friendId!}`
-  - `deleteFriend: {id!, friendId!}`
+  - `addFriends: {id!, [friendId]!}` ❗ В запросе должен присутствовать как минимум один пользователь на добавление в друзья
+  - `deleteFriends: {id!, [friendId]!}` ❗ В запросе должен присутствовать как минимум один пользователь на удаление из друзей
 - Операции со счетами
   - `createAccount: {userId!}`
   - `deleteAccount: {id!}`

@@ -55,15 +55,15 @@ class Application {
         System.out.println("""
                 Для выхода введите:\s""" + STOP_WORD + """
                 \nПоддерживаемые команды и формат данных: <cmd_name> <json-like payload>
-                Названия команд регистрозависимы. Кавычки в payload должны быть экранированы
-                Пример: deleteUser {\\"id\\": \\"019fe39d-e135-738c-a1af-10d8e4dffc7d\\"}
+                Названия команд регистрозависимы.
+                Пример: deleteUser {"id": "019fe39d-e135-738c-a1af-10d8e4dffc7d"}
                 - User (attrs - id:UUID!, login:String!, name:String!, age:integer!, gender:Gender, hairColor:HairColor, accounts:[Account], friends:[User]):
                   -- createUser {login!, name!, age!, gender, hairColor}
                   -- updateUser {id!, name, age, gender, hairColor}. В запрос передаются только изменяемые атрибуты. <attr>: null - очистка существующего значения
                   -- deleteUser {id!}
                   -- readUserInfo {id!}
-                  -- addFriend {id!, friendId!}
-                  -- deleteFriend {id!, friendId!}
+                  -- addFriends {id!, [friendId]!}. В запросе передается хотя бы один идентификатор друга
+                  -- deleteFriends {id!, [friendId]!}. В запросе передается хотя бы один идентификатор друга
                 - Account (attrs - id:UUID!, user:User!, balance:decimal, operations:[Operation]):
                   -- createAccount {userId:UUID!}
                   -- deleteAccount {id:UUID!}
