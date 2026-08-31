@@ -7,6 +7,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":service"))
     implementation(project(":dataaccess"))
+    implementation("com.google.code.gson:gson:2.11.0")
 }
 
 application {

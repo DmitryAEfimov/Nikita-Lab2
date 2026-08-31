@@ -13,9 +13,16 @@ public class UserRepositoryImpl extends BaseRepository implements UserRepository
     }
 
     @Override
-    public void deleteUser(UserEntity user) {
+    public void deleteUser(UUID userId) {
         doWithinTransaction(em -> {
-            em.remove(user);
+            var entity = em.find(UserEntity.class, userId);
+            if (entity == null) {
+                throw new IllegalArgumentException(
+                        "User not found: " + userId
+                );
+            }
+
+            em.remove(entity);
             return null;
         });
     }

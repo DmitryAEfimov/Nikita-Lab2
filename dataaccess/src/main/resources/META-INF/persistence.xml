@@ -10,8 +10,10 @@
     <persistence-unit name="Lab2PU" transaction-type="RESOURCE_LOCAL">
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>ru.nikita.lab2.dao.entity.UserEntity</class>
+        <class>ru.nikita.lab2.dao.entity.AccountEntity</class>
+        <class>ru.nikita.lab2.dao.entity.OperationEntity</class>
 
-        <jta-data-source>non-jta-data-source</jta-data-source>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver"

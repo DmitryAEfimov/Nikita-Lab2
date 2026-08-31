@@ -5,6 +5,8 @@ import ru.nikita.lab2.dao.entity.UserEntity;
 import ru.nikita.lab2.dao.repository.UserRepository;
 import ru.nikita.lab2.service.UserCRUDService;
 
+import java.util.UUID;
+
 public class UserServiceImpl implements UserCRUDService {
     private final UserRepository userRepo;
 
@@ -23,9 +25,8 @@ public class UserServiceImpl implements UserCRUDService {
     }
 
     @Override
-    public void removeUser(UserDto user) {
-        var entity = toEntity(user);
-        userRepo.deleteUser(entity);
+    public void removeUser(UUID userId) {
+        userRepo.deleteUser(userId);
     }
 
     @Override
